@@ -7,6 +7,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { SYMPTOMS } from '../constants/endometriosis';
@@ -17,6 +18,7 @@ type SymptomTrackerScreenProps = {
 
 export default function SymptomTrackerScreen({ navigation }: SymptomTrackerScreenProps) {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
+  const insets = useSafeAreaInsets();
 
   const toggleSymptom = (symptomId: string) => {
     if (selectedSymptoms.includes(symptomId)) {
@@ -83,7 +85,7 @@ export default function SymptomTrackerScreen({ navigation }: SymptomTrackerScree
     <View style={styles.container}>
       <ScrollView 
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 16 }]}
       >
         <View style={styles.header}>
           <Text style={styles.title}>Track Your Symptoms</Text>
@@ -104,7 +106,7 @@ export default function SymptomTrackerScreen({ navigation }: SymptomTrackerScree
         </View>
       </ScrollView>
 
-      <View style={styles.bottomBar}>
+      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, 16) }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
@@ -139,7 +141,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 24,
-    marginTop: 20,
   },
   title: {
     fontSize: 32,
@@ -239,7 +240,6 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#ffffff',
     padding: 16,
-    paddingBottom: 24,
     flexDirection: 'row',
     borderTopWidth: 1,
     borderTopColor: '#e2e8f0',

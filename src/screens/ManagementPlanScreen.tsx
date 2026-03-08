@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
@@ -17,6 +18,7 @@ type ManagementPlanScreenProps = {
 
 export default function ManagementPlanScreen({ navigation, route }: ManagementPlanScreenProps) {
   const { symptoms } = route.params;
+  const insets = useSafeAreaInsets();
 
   const renderRecommendationCard = (recommendation: typeof DIET_RECOMMENDATIONS) => {
     return (
@@ -44,7 +46,7 @@ export default function ManagementPlanScreen({ navigation, route }: ManagementPl
     <View style={styles.container}>
       <ScrollView 
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingTop: insets.top + 24 }]}
       >
         <View style={styles.header}>
           <Text style={styles.title}>Your Personalized Plan</Text>
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 20,
-    paddingTop: 60,
   },
   header: {
     marginBottom: 20,
