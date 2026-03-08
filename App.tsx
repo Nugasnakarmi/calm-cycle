@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './src/types';
@@ -23,7 +23,7 @@ export default function App() {
         <Stack.Screen name="SymptomTracker" component={SymptomTrackerScreen} />
         <Stack.Screen name="ManagementPlan" component={ManagementPlanScreen} />
       </Stack.Navigator>
-      <StatusBar style="dark" />
+      <StatusBar barStyle="dark-content" />
     </NavigationContainer>
   );
 }
