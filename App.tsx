@@ -1,36 +1,30 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootStackParamList } from './src/types';
+import HomeScreen from './src/screens/HomeScreen';
+import SymptomTrackerScreen from './src/screens/SymptomTrackerScreen';
+import ManagementPlanScreen from './src/screens/ManagementPlanScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#e8f5f1',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  welcomeText: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#1b5e5e',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  subtleText: {
-    fontSize: 16,
-    color: '#4a8a80',
-    textAlign: 'center',
-    lineHeight: 24,
-  },
-});
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome to Calm Cycle</Text>
-      <Text style={styles.subtleText}>Your journey to mindfulness begins here</Text>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: '#f5f8fa' },
+        }}
+      >
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="SymptomTracker" component={SymptomTrackerScreen} />
+        <Stack.Screen name="ManagementPlan" component={ManagementPlanScreen} />
+      </Stack.Navigator>
       <StatusBar style="dark" />
-    </View>
+    </NavigationContainer>
   );
 }
 
