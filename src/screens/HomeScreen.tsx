@@ -1,13 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
+import { useRouter } from 'expo-router';
 
-type HomeScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
-};
-
-export default function HomeScreen({ navigation }: HomeScreenProps) {
+export default function HomeScreen() {
+  const router = useRouter();
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View style={styles.header}>
@@ -41,7 +37,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
       <TouchableOpacity
         style={styles.primaryButton}
-        onPress={() => navigation.navigate('SymptomTracker')}
+        onPress={() => router.push('/symptom-tracker')}
       >
         <Text style={styles.primaryButtonText}>Track Symptoms</Text>
       </TouchableOpacity>

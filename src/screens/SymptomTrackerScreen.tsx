@@ -7,15 +7,11 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
+import { useRouter } from 'expo-router';
 import { SYMPTOMS } from '../constants/endometriosis';
 
-type SymptomTrackerScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'SymptomTracker'>;
-};
-
-export default function SymptomTrackerScreen({ navigation }: SymptomTrackerScreenProps) {
+export default function SymptomTrackerScreen() {
+  const router = useRouter();
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
 
   const toggleSymptom = (symptomId: string) => {
@@ -36,7 +32,7 @@ export default function SymptomTrackerScreen({ navigation }: SymptomTrackerScree
       return;
     }
 
-    navigation.navigate('ManagementPlan', { symptoms: selectedSymptoms });
+    router.push({ pathname: '/management-plan', params: { symptoms: JSON.stringify(selectedSymptoms) } });
   };
 
   const getCategorySymptoms = (category: string) => {
@@ -107,7 +103,7 @@ export default function SymptomTrackerScreen({ navigation }: SymptomTrackerScree
       <View style={styles.bottomBar}>
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
+          onPress={() => router.back()}
         >
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
