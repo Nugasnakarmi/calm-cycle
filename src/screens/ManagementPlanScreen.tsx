@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../types';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import {
   DIET_RECOMMENDATIONS,
   EXERCISE_RECOMMENDATIONS,
@@ -10,13 +8,10 @@ import {
   LIFESTYLE_RECOMMENDATIONS,
 } from '../constants/endometriosis';
 
-type ManagementPlanScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'ManagementPlan'>;
-  route: RouteProp<RootStackParamList, 'ManagementPlan'>;
-};
-
-export default function ManagementPlanScreen({ navigation, route }: ManagementPlanScreenProps) {
-  const { symptoms } = route.params;
+export default function ManagementPlanScreen() {
+  const router = useRouter();
+  const { symptoms: symptomsParam } = useLocalSearchParams<{ symptoms: string }>();
+  const symptoms = JSON.parse(symptomsParam ?? '[]') as string[];
 
   const renderRecommendationCard = (recommendation: typeof DIET_RECOMMENDATIONS) => {
     return (
@@ -76,7 +71,7 @@ export default function ManagementPlanScreen({ navigation, route }: ManagementPl
 
         <TouchableOpacity
           style={styles.startOverButton}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => router.push('/')}
         >
           <Text style={styles.startOverButtonText}>Return to Home</Text>
         </TouchableOpacity>

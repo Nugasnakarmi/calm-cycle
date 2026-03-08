@@ -1,11 +1,3 @@
-export type RootStackParamList = {
-  Home: undefined;
-  SymptomTracker: undefined;
-  ManagementPlan: {
-    symptoms: string[];
-  };
-};
-
 export interface Symptom {
   id: string;
   name: string;
