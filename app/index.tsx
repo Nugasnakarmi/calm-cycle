@@ -1,3 +1,3 @@
-import HomeScreen from '../src/screens/HomeScreen';
+import TestFormScreen from '../src/screens/TestFormScreen';
 
-export default HomeScreen;
+export default TestFormScreen;
