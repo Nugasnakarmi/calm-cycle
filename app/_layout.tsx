@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 
 export default function RootLayout() {
   return (
@@ -10,7 +10,7 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: '#f5f8fa' },
         }}
       />
-      <StatusBar style="dark" />
+      <StatusBar barStyle="dark-content" />
     </>
   );
 }
