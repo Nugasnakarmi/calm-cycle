@@ -128,3 +128,116 @@ export const LIFESTYLE_RECOMMENDATIONS: ManagementRecommendation = {
     'Communicate openly with your healthcare provider',
   ],
 };
+
+// Maps each symptom to the most relevant plan items (plan title → item indices)
+export const SYMPTOM_PLAN_MAP: Record<
+  string,
+  { diet: number[]; exercise: number[]; yoga: number[]; lifestyle: number[] }
+> = {
+  'pelvic-pain': {
+    diet: [0, 1, 5, 6],
+    exercise: [0, 3, 5],
+    yoga: [0, 1, 4, 5],
+    lifestyle: [0, 3],
+  },
+  'painful-periods': {
+    diet: [0, 1, 5, 6, 8],
+    exercise: [0, 3, 5, 6],
+    yoga: [0, 1, 2, 5],
+    lifestyle: [0, 3, 6],
+  },
+  'heavy-bleeding': {
+    diet: [0, 2, 5, 9],
+    exercise: [0, 5, 6],
+    yoga: [2, 5, 6],
+    lifestyle: [0, 1, 6, 7],
+  },
+  'pain-intercourse': {
+    diet: [0, 1, 5],
+    exercise: [3, 5],
+    yoga: [0, 1, 4, 5, 7],
+    lifestyle: [0, 3, 5, 7],
+  },
+  'bowel-pain': {
+    diet: [0, 2, 7, 8, 9],
+    exercise: [0, 5, 6],
+    yoga: [0, 2, 4, 5],
+    lifestyle: [0, 2, 3],
+  },
+  'urination-pain': {
+    diet: [8, 9],
+    exercise: [0, 5],
+    yoga: [2, 5],
+    lifestyle: [0, 3, 7],
+  },
+  fatigue: {
+    diet: [0, 1, 2, 3, 9],
+    exercise: [0, 5, 6, 7],
+    yoga: [5, 6, 7],
+    lifestyle: [1, 3, 4, 6],
+  },
+  bloating: {
+    diet: [0, 2, 6, 7, 8, 9],
+    exercise: [0, 3, 5],
+    yoga: [0, 3, 4, 5],
+    lifestyle: [0, 3, 6],
+  },
+  nausea: {
+    diet: [0, 2, 6, 8, 9],
+    exercise: [0, 5],
+    yoga: [5, 6],
+    lifestyle: [0, 3, 6],
+  },
+  'back-pain': {
+    diet: [0, 1, 5],
+    exercise: [0, 3, 4, 5],
+    yoga: [0, 3, 4, 5],
+    lifestyle: [0, 3, 4],
+  },
+};
+
+export function buildPersonalisedPlan(
+  selectedSymptomIds: string[]
+): ManagementRecommendation[] {
+  if (!selectedSymptomIds.length) {
+    return [
+      DIET_RECOMMENDATIONS,
+      EXERCISE_RECOMMENDATIONS,
+      YOGA_RECOMMENDATIONS,
+      LIFESTYLE_RECOMMENDATIONS,
+    ];
+  }
+
+  const dietIndices = new Set<number>();
+  const exerciseIndices = new Set<number>();
+  const yogaIndices = new Set<number>();
+  const lifestyleIndices = new Set<number>();
+
+  selectedSymptomIds.forEach((id) => {
+    const map = SYMPTOM_PLAN_MAP[id];
+    if (!map) return;
+    map.diet.forEach((i) => dietIndices.add(i));
+    map.exercise.forEach((i) => exerciseIndices.add(i));
+    map.yoga.forEach((i) => yogaIndices.add(i));
+    map.lifestyle.forEach((i) => lifestyleIndices.add(i));
+  });
+
+  const pick = (all: string[], indices: Set<number>) =>
+    Array.from(indices)
+      .sort((a, b) => a - b)
+      .map((i) => all[i])
+      .filter(Boolean);
+
+  return [
+    { ...DIET_RECOMMENDATIONS, items: pick(DIET_RECOMMENDATIONS.items, dietIndices) },
+    {
+      ...EXERCISE_RECOMMENDATIONS,
+      items: pick(EXERCISE_RECOMMENDATIONS.items, exerciseIndices),
+    },
+    { ...YOGA_RECOMMENDATIONS, items: pick(YOGA_RECOMMENDATIONS.items, yogaIndices) },
+    {
+      ...LIFESTYLE_RECOMMENDATIONS,
+      items: pick(LIFESTYLE_RECOMMENDATIONS.items, lifestyleIndices),
+    },
+  ].filter((r) => r.items.length > 0);
+}

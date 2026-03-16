@@ -11,3 +11,18 @@ export interface ManagementRecommendation {
   items: string[];
   icon: string;
 }
+
+export interface ProgressEntry {
+  id?: number;
+  date: string;
+  painLevel: number;
+  symptoms: string[];
+  notes: string;
+  completedItems: string[];
+  createdAt?: string;
+}
+
+export interface SavedSymptoms {
+  symptomIds: string[];
+  savedAt: string;
+}

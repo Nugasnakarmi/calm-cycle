@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "expo": "54",
+    "expo-sqlite": "^15.2.14",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
