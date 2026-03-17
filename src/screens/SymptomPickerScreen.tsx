@@ -194,6 +194,8 @@ export default function SymptomPickerScreen() {
               style={[styles.planButton, !selected.size && styles.planButtonDisabled]}
               activeOpacity={0.8}
               onPress={handleGetPlan}
+              disabled={!selected.size}
+              accessibilityState={{ disabled: !selected.size }}
             >
               <Text style={styles.planButtonText}>Get My Plan →</Text>
             </TouchableOpacity>

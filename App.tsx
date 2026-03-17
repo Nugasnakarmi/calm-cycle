@@ -7,7 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ManagementRecommendation } from './src/types';
 import {
   DIET_RECOMMENDATIONS,
@@ -107,8 +107,9 @@ function TabBar({
   active: TabKey;
   onChange: (t: TabKey) => void;
 }) {
+  const insets = useSafeAreaInsets();
   return (
-    <View style={styles.tabBar}>
+    <View style={[styles.tabBar, { paddingBottom: Math.max(insets.bottom, 8) }]}>
       {TABS.map((t) => (
         <TouchableOpacity
           key={t.key}
@@ -165,7 +166,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderTopWidth: 1,
     borderTopColor: PRIMARY_LIGHT,
-    paddingBottom: 8,
     paddingTop: 6,
     shadowColor: PRIMARY,
     shadowOffset: { width: 0, height: -2 },

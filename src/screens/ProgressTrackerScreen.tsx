@@ -19,9 +19,13 @@ import {
 } from '../db/database';
 import { SYMPTOMS } from '../constants/endometriosis';
 
+// Module-level lookup avoids repeated linear searches inside HistoryCard renders
+const SYMPTOM_NAME_MAP = new Map(SYMPTOMS.map((s) => [s.id, s.name]));
+
 function todayString(): string {
   const d = new Date();
-  return d.toISOString().slice(0, 10); // YYYY-MM-DD
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 function formatDate(dateStr: string): string {
@@ -54,9 +58,7 @@ const PAIN_COLOR = (level: number): string => {
 
 function HistoryCard({ entry }: { entry: ProgressEntry }) {
   const [expanded, setExpanded] = useState(false);
-  const symptomNames = entry.symptoms
-    .map((id) => SYMPTOMS.find((s) => s.id === id)?.name ?? id)
-    .filter(Boolean);
+  const symptomNames = entry.symptoms.map((id) => SYMPTOM_NAME_MAP.get(id) ?? id);
 
   return (
     <TouchableOpacity

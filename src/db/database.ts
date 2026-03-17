@@ -15,13 +15,16 @@ async function initSchema(database: SQLite.SQLiteDatabase): Promise<void> {
   await database.execAsync(`
     CREATE TABLE IF NOT EXISTS progress_entries (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      date TEXT NOT NULL,
+      date TEXT NOT NULL UNIQUE,
       pain_level INTEGER NOT NULL DEFAULT 0,
       symptoms TEXT NOT NULL DEFAULT '[]',
       notes TEXT NOT NULL DEFAULT '',
       completed_items TEXT NOT NULL DEFAULT '[]',
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+
+    -- Ensure uniqueness on existing databases that pre-date the UNIQUE column constraint
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_progress_entries_date ON progress_entries(date);
 
     CREATE TABLE IF NOT EXISTS user_symptoms (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,8 +38,9 @@ async function initSchema(database: SQLite.SQLiteDatabase): Promise<void> {
 
 export async function saveProgressEntry(entry: ProgressEntry): Promise<void> {
   const database = await getDb();
+  // INSERT OR REPLACE handles both new entries and updates for the same date
   await database.runAsync(
-    `INSERT INTO progress_entries (date, pain_level, symptoms, notes, completed_items)
+    `INSERT OR REPLACE INTO progress_entries (date, pain_level, symptoms, notes, completed_items)
      VALUES (?, ?, ?, ?, ?)`,
     [
       entry.date,
@@ -98,7 +102,7 @@ export async function getEntryForDate(date: string): Promise<ProgressEntry | nul
     notes: string;
     completed_items: string;
     created_at: string;
-  }>('SELECT * FROM progress_entries WHERE date = ?', [date]);
+  }>('SELECT * FROM progress_entries WHERE date = ? ORDER BY id DESC LIMIT 1', [date]);
 
   if (!row) return null;
   return {
@@ -116,11 +120,13 @@ export async function getEntryForDate(date: string): Promise<ProgressEntry | nul
 
 export async function saveUserSymptoms(symptomIds: string[]): Promise<void> {
   const database = await getDb();
-  await database.runAsync('DELETE FROM user_symptoms');
-  await database.runAsync(
-    'INSERT INTO user_symptoms (symptom_ids, saved_at) VALUES (?, datetime(\'now\'))',
-    [JSON.stringify(symptomIds)]
-  );
+  await database.withTransactionAsync(async () => {
+    await database.runAsync('DELETE FROM user_symptoms');
+    await database.runAsync(
+      "INSERT INTO user_symptoms (symptom_ids, saved_at) VALUES (?, datetime('now'))",
+      [JSON.stringify(symptomIds)]
+    );
+  });
 }
 
 export async function loadUserSymptoms(): Promise<SavedSymptoms | null> {

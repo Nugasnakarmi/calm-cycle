@@ -129,70 +129,250 @@ export const LIFESTYLE_RECOMMENDATIONS: ManagementRecommendation = {
   ],
 };
 
-// Maps each symptom to the most relevant plan items (plan title → item indices)
+// Maps each symptom to the most relevant plan item texts.
+// Using item strings (not array indices) so reordering items never silently changes the plan.
 export const SYMPTOM_PLAN_MAP: Record<
   string,
-  { diet: number[]; exercise: number[]; yoga: number[]; lifestyle: number[] }
+  { diet: string[]; exercise: string[]; yoga: string[]; lifestyle: string[] }
 > = {
   'pelvic-pain': {
-    diet: [0, 1, 5, 6],
-    exercise: [0, 3, 5],
-    yoga: [0, 1, 4, 5],
-    lifestyle: [0, 3],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Include omega-3 rich foods: salmon, sardines, mackerel',
+      'Limit red and processed meats',
+      'Reduce sugar and highly processed foods',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Light stretching: Focus on hip and pelvic area',
+      'Listen to your body and rest on difficult days',
+    ],
+    yoga: [
+      "Child's Pose (Balasana): Gentle hip and lower back stretch",
+      'Reclining Bound Angle Pose (Supta Baddha Konasana)',
+      'Supine Twist: Gentle spinal rotation',
+      'Deep breathing exercises: 5-10 minutes daily',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+    ],
   },
   'painful-periods': {
-    diet: [0, 1, 5, 6, 8],
-    exercise: [0, 3, 5, 6],
-    yoga: [0, 1, 2, 5],
-    lifestyle: [0, 3, 6],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Include omega-3 rich foods: salmon, sardines, mackerel',
+      'Limit red and processed meats',
+      'Reduce sugar and highly processed foods',
+      'Limit alcohol and caffeine consumption',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Light stretching: Focus on hip and pelvic area',
+      'Listen to your body and rest on difficult days',
+      'Aim for consistent, moderate activity over intense workouts',
+    ],
+    yoga: [
+      "Child's Pose (Balasana): Gentle hip and lower back stretch",
+      'Reclining Bound Angle Pose (Supta Baddha Konasana)',
+      'Legs-Up-The-Wall Pose (Viparita Karani)',
+      'Deep breathing exercises: 5-10 minutes daily',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+      'Prioritize self-care and rest when needed',
+    ],
   },
   'heavy-bleeding': {
-    diet: [0, 2, 5, 9],
-    exercise: [0, 5, 6],
-    yoga: [2, 5, 6],
-    lifestyle: [0, 1, 6, 7],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Choose whole grains over refined carbohydrates',
+      'Limit red and processed meats',
+      'Stay well hydrated with water throughout the day',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Listen to your body and rest on difficult days',
+      'Aim for consistent, moderate activity over intense workouts',
+    ],
+    yoga: [
+      'Legs-Up-The-Wall Pose (Viparita Karani)',
+      'Deep breathing exercises: 5-10 minutes daily',
+      'Meditation: Mindfulness for pain management',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Maintain a regular sleep schedule (7-9 hours)',
+      'Prioritize self-care and rest when needed',
+      'Communicate openly with your healthcare provider',
+    ],
   },
   'pain-intercourse': {
-    diet: [0, 1, 5],
-    exercise: [3, 5],
-    yoga: [0, 1, 4, 5, 7],
-    lifestyle: [0, 3, 5, 7],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Include omega-3 rich foods: salmon, sardines, mackerel',
+      'Limit red and processed meats',
+    ],
+    exercise: [
+      'Light stretching: Focus on hip and pelvic area',
+      'Listen to your body and rest on difficult days',
+    ],
+    yoga: [
+      "Child's Pose (Balasana): Gentle hip and lower back stretch",
+      'Reclining Bound Angle Pose (Supta Baddha Konasana)',
+      'Supine Twist: Gentle spinal rotation',
+      'Deep breathing exercises: 5-10 minutes daily',
+      'Progressive muscle relaxation',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+      'Join support groups or seek counseling if needed',
+      'Communicate openly with your healthcare provider',
+    ],
   },
   'bowel-pain': {
-    diet: [0, 2, 7, 8, 9],
-    exercise: [0, 5, 6],
-    yoga: [0, 2, 4, 5],
-    lifestyle: [0, 2, 3],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Choose whole grains over refined carbohydrates',
+      'Consider reducing dairy and gluten if sensitive',
+      'Limit alcohol and caffeine consumption',
+      'Stay well hydrated with water throughout the day',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Listen to your body and rest on difficult days',
+      'Aim for consistent, moderate activity over intense workouts',
+    ],
+    yoga: [
+      "Child's Pose (Balasana): Gentle hip and lower back stretch",
+      'Legs-Up-The-Wall Pose (Viparita Karani)',
+      'Supine Twist: Gentle spinal rotation',
+      'Deep breathing exercises: 5-10 minutes daily',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Track your symptoms to identify patterns',
+      'Practice stress management techniques',
+    ],
   },
   'urination-pain': {
-    diet: [8, 9],
-    exercise: [0, 5],
-    yoga: [2, 5],
-    lifestyle: [0, 3, 7],
+    diet: [
+      'Limit alcohol and caffeine consumption',
+      'Stay well hydrated with water throughout the day',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Listen to your body and rest on difficult days',
+    ],
+    yoga: [
+      'Legs-Up-The-Wall Pose (Viparita Karani)',
+      'Deep breathing exercises: 5-10 minutes daily',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+      'Communicate openly with your healthcare provider',
+    ],
   },
   fatigue: {
-    diet: [0, 1, 2, 3, 9],
-    exercise: [0, 5, 6, 7],
-    yoga: [5, 6, 7],
-    lifestyle: [1, 3, 4, 6],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Include omega-3 rich foods: salmon, sardines, mackerel',
+      'Choose whole grains over refined carbohydrates',
+      'Add nuts and seeds (flaxseed, walnuts) for healthy fats',
+      'Stay well hydrated with water throughout the day',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Listen to your body and rest on difficult days',
+      'Aim for consistent, moderate activity over intense workouts',
+      'Gradually increase duration and intensity',
+    ],
+    yoga: [
+      'Deep breathing exercises: 5-10 minutes daily',
+      'Meditation: Mindfulness for pain management',
+      'Progressive muscle relaxation',
+    ],
+    lifestyle: [
+      'Maintain a regular sleep schedule (7-9 hours)',
+      'Practice stress management techniques',
+      'Consider acupuncture or massage therapy',
+      'Prioritize self-care and rest when needed',
+    ],
   },
   bloating: {
-    diet: [0, 2, 6, 7, 8, 9],
-    exercise: [0, 3, 5],
-    yoga: [0, 3, 4, 5],
-    lifestyle: [0, 3, 6],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Choose whole grains over refined carbohydrates',
+      'Reduce sugar and highly processed foods',
+      'Consider reducing dairy and gluten if sensitive',
+      'Limit alcohol and caffeine consumption',
+      'Stay well hydrated with water throughout the day',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Light stretching: Focus on hip and pelvic area',
+      'Listen to your body and rest on difficult days',
+    ],
+    yoga: [
+      "Child's Pose (Balasana): Gentle hip and lower back stretch",
+      'Cat-Cow Pose (Marjaryasana-Bitilasana): Spinal flexibility',
+      'Supine Twist: Gentle spinal rotation',
+      'Deep breathing exercises: 5-10 minutes daily',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+      'Prioritize self-care and rest when needed',
+    ],
   },
   nausea: {
-    diet: [0, 2, 6, 8, 9],
-    exercise: [0, 5],
-    yoga: [5, 6],
-    lifestyle: [0, 3, 6],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Choose whole grains over refined carbohydrates',
+      'Reduce sugar and highly processed foods',
+      'Limit alcohol and caffeine consumption',
+      'Stay well hydrated with water throughout the day',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Listen to your body and rest on difficult days',
+    ],
+    yoga: [
+      'Deep breathing exercises: 5-10 minutes daily',
+      'Meditation: Mindfulness for pain management',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+      'Prioritize self-care and rest when needed',
+    ],
   },
   'back-pain': {
-    diet: [0, 1, 5],
-    exercise: [0, 3, 4, 5],
-    yoga: [0, 3, 4, 5],
-    lifestyle: [0, 3, 4],
+    diet: [
+      'Eat plenty of fruits and vegetables (especially leafy greens)',
+      'Include omega-3 rich foods: salmon, sardines, mackerel',
+      'Limit red and processed meats',
+    ],
+    exercise: [
+      'Walking: 20-30 minutes daily at a comfortable pace',
+      'Light stretching: Focus on hip and pelvic area',
+      'Pilates: Strengthens core without high impact',
+      'Listen to your body and rest on difficult days',
+    ],
+    yoga: [
+      "Child's Pose (Balasana): Gentle hip and lower back stretch",
+      'Cat-Cow Pose (Marjaryasana-Bitilasana): Spinal flexibility',
+      'Supine Twist: Gentle spinal rotation',
+      'Deep breathing exercises: 5-10 minutes daily',
+    ],
+    lifestyle: [
+      'Use heat therapy: heating pad or warm bath for pain relief',
+      'Practice stress management techniques',
+      'Consider acupuncture or massage therapy',
+    ],
   },
 };
 
@@ -208,36 +388,27 @@ export function buildPersonalisedPlan(
     ];
   }
 
-  const dietIndices = new Set<number>();
-  const exerciseIndices = new Set<number>();
-  const yogaIndices = new Set<number>();
-  const lifestyleIndices = new Set<number>();
+  const dietItems = new Set<string>();
+  const exerciseItems = new Set<string>();
+  const yogaItems = new Set<string>();
+  const lifestyleItems = new Set<string>();
 
   selectedSymptomIds.forEach((id) => {
     const map = SYMPTOM_PLAN_MAP[id];
     if (!map) return;
-    map.diet.forEach((i) => dietIndices.add(i));
-    map.exercise.forEach((i) => exerciseIndices.add(i));
-    map.yoga.forEach((i) => yogaIndices.add(i));
-    map.lifestyle.forEach((i) => lifestyleIndices.add(i));
+    map.diet.forEach((s) => dietItems.add(s));
+    map.exercise.forEach((s) => exerciseItems.add(s));
+    map.yoga.forEach((s) => yogaItems.add(s));
+    map.lifestyle.forEach((s) => lifestyleItems.add(s));
   });
 
-  const pick = (all: string[], indices: Set<number>) =>
-    Array.from(indices)
-      .sort((a, b) => a - b)
-      .map((i) => all[i])
-      .filter(Boolean);
+  // Filter preserves the original ordering from the recommendation arrays
+  const pick = (all: string[], keys: Set<string>) => all.filter((item) => keys.has(item));
 
   return [
-    { ...DIET_RECOMMENDATIONS, items: pick(DIET_RECOMMENDATIONS.items, dietIndices) },
-    {
-      ...EXERCISE_RECOMMENDATIONS,
-      items: pick(EXERCISE_RECOMMENDATIONS.items, exerciseIndices),
-    },
-    { ...YOGA_RECOMMENDATIONS, items: pick(YOGA_RECOMMENDATIONS.items, yogaIndices) },
-    {
-      ...LIFESTYLE_RECOMMENDATIONS,
-      items: pick(LIFESTYLE_RECOMMENDATIONS.items, lifestyleIndices),
-    },
+    { ...DIET_RECOMMENDATIONS, items: pick(DIET_RECOMMENDATIONS.items, dietItems) },
+    { ...EXERCISE_RECOMMENDATIONS, items: pick(EXERCISE_RECOMMENDATIONS.items, exerciseItems) },
+    { ...YOGA_RECOMMENDATIONS, items: pick(YOGA_RECOMMENDATIONS.items, yogaItems) },
+    { ...LIFESTYLE_RECOMMENDATIONS, items: pick(LIFESTYLE_RECOMMENDATIONS.items, lifestyleItems) },
   ].filter((r) => r.items.length > 0);
 }
